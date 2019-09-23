@@ -7,34 +7,41 @@ class App extends Component {
         super();
         this.speed = 100;
         this.rows = 30;
-        this.cols = 50;
+        this.cells = 30;
 
         this.state = {
             generation: 0,
-            gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+            grid: Array(this.rows).fill().map(() => Array(this.cells).fill(false))
         }
     }
 
-    selectBox = (row, col) => {
-        let gridCopy = arrayClone(this.state.gridFull);
-        gridCopy[row][col] = !gridCopy[row][col];
-        this.setState({
-            gridFull: gridCopy
-        });
+    selectBox = (selectedRow, selectedCell) => {
+        this.setState((prev) => {
+            const grid = prev.grid.map((row, rowIndex) => {
+                return row.map((cell, cellIndex) => {
+                    if (rowIndex === selectedRow && cellIndex === selectedCell){
+                        return !cell;
+                    }
+
+                    return cell;
+                })
+            })
+            return { grid }
+        })
     }
 
     seed = () => {
-        let gridCopy = arrayClone(this.state.gridFull);
-        for (let i = 0; i < this.rows; i++){
-            for (let j = 0; j < this.cols; j++){
+        this.setState((prev) => {
+            const grid = prev.grid.map(row => row.map(cell => {
                 if (Math.floor(Math.random() * 4) === 1) {
-                    gridCopy[i][j] = true;
+                    return true;
                 }
-            }
-        }
-        this.setState({
-            gridFull: gridCopy
-        });
+
+                return cell;
+            }))
+
+            return { grid }
+        })
     }
 
     componentDidMount() {
@@ -46,19 +53,15 @@ class App extends Component {
             <div>
                 <h1>The Game Of Life</h1>
                 <Grid
-                    gridFull={this.state.gridFull}
-                    rows={this.rows}
-                    cols={this.cols}
+                    grid={this.state.grid}
+                    width={this.cells * 16}
                     selectBox={this.selectBox}
                 />
-                <p>{this.state.gridFull}</p>
+                <p>{this.state.grid}</p>
                 <h2>Generations: {this.state.generation}</h2>
             </div>
         );
     }
 }
 
-function arrayClone(arr) {
-    return JSON.parse(JSON.stringify(arr));
-}
 export default App;

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 
 class Box extends Component {
-    selectBox = () => {
-        this.props.selectBox(this.props.row, this.props.col)
-    }
 
     render(){
+        const { boxClass, id, selectBox} = this.props;
         return(
             <div
-                className={this.props.boxClass}
-                id={this.props.id}
-                onClick={this.selectBox}
+                className={boxClass}
+                id={id}
+                onClick={selectBox}
             />
         );
     }
