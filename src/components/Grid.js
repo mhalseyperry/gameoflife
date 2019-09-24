@@ -4,8 +4,8 @@ import '../index.css'
 
 class Grid extends Component {
     render = () => {
-        const { width, grid, selectBox } = this.props;
-
+        const { cells, grid, selectBox } = this.props;
+        const width = cells * 16;
         return (
             <div className="grid" style={{ width }}>
                 {grid.map((row, rowIndex) => (
