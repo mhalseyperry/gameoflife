@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Grid from './components/Grid';
-import './App.css'
+import './App.css';
+import { cellShouldLive } from './helpers/rules';
+
 
 class App extends Component {
     constructor(){
         super();
         const rows = 30;
-        const cells = 50;
+        const cells = 30;
 
         this.state = {
             rows,
@@ -65,17 +67,7 @@ class App extends Component {
 
         for(let i = 0; i < rows; i++){
             for(let j = 0; j < cells; j++){
-                let count = 0;
-                if (i > 0) if (grid[i - 1][j]) count++;
-                if (i > 0 && j > 0) if (grid[i - 1][j - 1]) count++;
-                if (i > 0 && j < cells - 1) if (grid[i - 1][j + 1]) count++;
-                if (j < cells - 1) if (grid[i][j + 1]) count++;
-                if (j > 0) if (grid[i][j - 1]) count++;
-                if (i < rows - 1) if (grid[i + 1][j]) count++;
-                if (i < rows - 1 && j > 0) if (grid[i + 1][j - 1]) count++;
-                if (i < rows - 1 && j < cells - 1) if (grid[i + 1][j + 1]) count++;
-                if (grid[i][j] && (count < 2 || count > 3)) newGrid[i][j] = false;
-                if (!grid[i][j] && count === 3) newGrid[i][j] = true;
+                newGrid[i][j] = cellShouldLive(i, j, newGrid);
             }
         }
 
