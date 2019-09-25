@@ -67,7 +67,7 @@ class App extends Component {
 
         for(let i = 0; i < rows; i++){
             for(let j = 0; j < cells; j++){
-                newGrid[i][j] = cellShouldLive(i, j, newGrid);
+                newGrid[i][j] = cellShouldLive(i, j, grid);
             }
         }
 
