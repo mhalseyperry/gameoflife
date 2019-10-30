@@ -88,8 +88,10 @@ class App extends Component {
                     cells={this.state.cells}
                     selectBox={this.selectBox}
                 />
-                <button onClick={this.pause}>Pause</button>
-                <button onClick={this.playButton}>Play</button>
+                <div className="buttons">
+                    <button onClick={this.pause}>Pause</button>
+                    <button onClick={this.playButton}>Play</button>
+                </div>
                 <h2>Generations: {this.state.generation}</h2>
             </div>
         );
